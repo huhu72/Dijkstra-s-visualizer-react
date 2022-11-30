@@ -23,6 +23,7 @@ class Node extends Component {
 
     return (
       <div
+        key={`node-${row}-${col}`}
         id={`node-${row}-${col}`}
         className={`node ${appendedClassName}`}
         onMouseDown={() => onMouseDown(row, col)}
