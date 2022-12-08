@@ -55,12 +55,6 @@ const ButtonToggle = styled(Button)`
 
 export default function ButtonToggleGroup({ onClick, buttonSettings }) {
   const [active, setActive] = useState(ButtonTypes.Wall);
-  const [isButtonActive, setIsButtonActive] = useState(true);
-
-  const toggleButton = () => {
-    setIsButtonActive(!isButtonActive);
-  };
-
   return (
     <div>
       {Object.keys(ButtonTypes).map((type) => (
