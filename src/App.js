@@ -2,6 +2,8 @@ import "./App.css";
 import Grid from "./Components/Grid/grid";
 import React, { useState } from "react";
 import ButtonToggleGroup from "./Components/ButtonToggleGroup";
+import { ButtonTypes } from "./types";
+
 var startNode = { row: null, col: null };
 var endNode = { row: null, col: null };
 
@@ -223,8 +225,23 @@ function createNode(col, row) {
 export default function App() {
   const [grid, setGrid] = useState(getInitialGrid());
   const [mouseIsPressed, setMouseIsPresssed] = useState(false);
-  const [activeBtn, setActiveBtn] = useState({ id: "Wall" });
+  const [activeBtn, setActiveBtn] = useState(ButtonTypes.Wall);
   const [startNode, setStartNode] = useState({ row: null, col: null });
+  const [buttonSettings, setButtonSettings] = useState(
+    getInitialButtonSettings()
+  );
+
+  function getInitialButtonSettings() {
+    return Object.keys(ButtonTypes).reduce((accumulator, type) => {
+      return {
+        ...accumulator,
+        [type]: {
+          enabled: true,
+        },
+      };
+    }, {});
+  }
+
   function handleMouseEnter(row, col) {
     if (!mouseIsPressed) return;
     const newGrid = getNewGridWithWall(grid, row, col);
@@ -254,30 +271,33 @@ export default function App() {
   }
 
   function handleMouseDown(row, col) {
-    if (activeBtn === "Wall") {
+    if (activeBtn === ButtonTypes.Wall) {
       const updatedGrid = getNewGridWithWall(grid, row, col);
       setGrid(updatedGrid);
       setMouseIsPresssed(true);
-    } else if (activeBtn === "Start" && startNode.row == null) {
+    } else if (activeBtn === ButtonTypes.Start && startNode.row == null) {
       const updatedGrid = getNewGridWithStartNode(grid, row, col);
       setGrid(updatedGrid);
+      setButtonSettings({ ...buttonSettings, Start: { enabled: false } });
     }
   }
-  function handleActive(buttonType) {
+
+  function onClick(buttonType) {
     setActiveBtn(buttonType);
-  }
-  function handleDisableStart(event, setDisabledButton) {
-    if (startNode.col !== null && event.currentTarget.id === "Start") {
-      event.currentTarget.disabled = true;
+    if (buttonType === ButtonTypes.Reset) {
+      handleReset();
     }
-    console.log(event);
   }
+
+  function handleReset() {
+    setGrid(getInitialGrid());
+    setButtonSettings(getInitialButtonSettings);
+    setStartNode({ row: null, col: null });
+  }
+
   return (
     <div className="App" onMouseUp={handleMouseUp}>
-      <ButtonToggleGroup
-        onActive={handleActive}
-        onDisableStart={handleDisableStart}
-      />
+      <ButtonToggleGroup onClick={onClick} buttonSettings={buttonSettings} />
       <Grid
         key="grid"
         grid={grid}
