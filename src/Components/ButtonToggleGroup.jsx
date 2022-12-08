@@ -1,18 +1,23 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { ButtonTypes } from "./../types";
 
 const theme = {
-  Wall: {
+  [ButtonTypes.Wall]: {
     defaultColor: "#F4A261",
     hover: "#F18934",
   },
-  Start: {
+  [ButtonTypes.Start]: {
     defaultColor: "#E76F51",
     hover: "#E24E29",
   },
-  End: {
+  [ButtonTypes.End]: {
     defaultColor: "#E9C46A",
     hover: "#E2B43E",
+  },
+  [ButtonTypes.Reset]: {
+    defaultColor: "#00CECB",
+    hover: "#00AFAC",
   },
 };
 
@@ -35,23 +40,32 @@ const Button = styled.button`
     background-color: black;
   }
 `;
+
+/*
 Button.defaultProps = {
   theme: "Wall",
 };
+*/
 
 const ButtonToggle = styled(Button)`
   opacity: 0.7;
   ${({ active }) => active && `opacity:1`};
 `;
-const types = ["Wall", "Start", "End"];
+//const types = ["Wall", "Start", "End"];
 
-export default function ButtonToggleGroup({ onActive, onDisableStart }) {
-  const [active, setActive] = useState(types[0]);
-  const [disabledButtons, setDisabledButtons] = useState([]);
+export default function ButtonToggleGroup({ onClick, buttonSettings }) {
+  const [active, setActive] = useState(ButtonTypes.Wall);
+  const [isButtonActive, setIsButtonActive] = useState(true);
+
+  const toggleButton = () => {
+    setIsButtonActive(!isButtonActive);
+  };
+
   return (
     <div>
-      {types.map((type) => (
+      {Object.keys(ButtonTypes).map((type) => (
         <ButtonToggle
+          disabled={!buttonSettings[type].enabled}
           key={type}
           id={type}
           active={active === type}
@@ -59,8 +73,7 @@ export default function ButtonToggleGroup({ onActive, onDisableStart }) {
           onClick={(e) => {
             console.log(type);
             setActive(type);
-            onActive(type);
-            onDisableStart(e);
+            onClick(type);
           }}
         >
           {type}
