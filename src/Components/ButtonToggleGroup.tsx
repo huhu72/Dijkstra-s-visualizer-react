@@ -1,8 +1,17 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { ButtonTypes } from "./../types";
+import { ButtonSettings, ButtonTypes } from "../types";
 
-const theme = {
+type Theme = {
+  defaultColor: string;
+  hover: string
+}
+
+type Props = {
+  buttonType: ButtonTypes
+  active: boolean
+}
+const theme: Record<ButtonTypes, Theme> = {
   [ButtonTypes.Wall]: {
     defaultColor: "#F4A261",
     hover: "#F18934",
@@ -22,7 +31,7 @@ const theme = {
 };
 
 const Button = styled.button`
-  background-color: ${(props) => theme[props.buttonType].defaultColor};
+  background-color: ${(props: Props) => theme[props.buttonType].defaultColor};
   color: white;
   padding: 2px 15px;
   border-radius: 5px;
@@ -32,7 +41,7 @@ const Button = styled.button`
   margin: 5px 5px 0px;
   transition: ease background-color 250ms;
   &:hover {
-    background-color: ${(props) => theme[props.buttonType].hover};
+    background-color: ${(props: Props) => theme[props.buttonType].hover};
   }
   &:disabled {
     cursor: pointer;
@@ -53,21 +62,25 @@ const ButtonToggle = styled(Button)`
 `;
 //const types = ["Wall", "Start", "End"];
 
-export default function ButtonToggleGroup({ onClick, buttonSettings }) {
+type ButtonToggleGroupProps = {
+  onClick: (buttonType: ButtonTypes) => void;
+  buttonSettings: Record<ButtonTypes, ButtonSettings>
+}
+export default function ButtonToggleGroup({ onClick, buttonSettings }: ButtonToggleGroupProps) {
   const [active, setActive] = useState(ButtonTypes.Wall);
   return (
     <div>
       {Object.keys(ButtonTypes).map((type) => (
         <ButtonToggle
-          disabled={!buttonSettings[type].enabled}
+          disabled={!buttonSettings[type as ButtonTypes].enabled}
           key={type}
           id={type}
           active={active === type}
-          buttonType={type}
+          buttonType={type as ButtonTypes}
           onClick={(e) => {
             console.log(type);
-            setActive(type);
-            onClick(type);
+            setActive(type as ButtonTypes);
+            onClick(type as ButtonTypes);
           }}
         >
           {type}

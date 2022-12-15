@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import "./node.css";
-class Node extends Component {
+interface Props{
+  row: number;
+  col: number;
+  isStart: boolean;
+  isFinish: boolean;
+  isWall: boolean;
+  onMouseDown: (row:number, col:number)=>void;
+  onMouseUp:()=>void;
+  onMouseEnter: (row:number, col:number)=>void;
+}
+class Node extends Component<Props> {
   state = {};
   render() {
     const {

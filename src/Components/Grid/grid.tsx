@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import Node from "../Node/node";
+import {NodeType} from "../../types"
 
-class Grid extends Component {
+interface Props{
+  grid:NodeType[][];
+  onMouseDown: (row:number, col:number)=>void;
+  onMouseUp:()=>void;
+  onMouseEnter: (row:number, col:number)=>void;
+}
+class Grid extends Component<Props> {
   render() {
-    const { grid, mouseIsPressed, onMouseDown, onMouseUp, onMouseEnter } =
+    const { grid, onMouseDown, onMouseUp, onMouseEnter } =
       this.props;
 
     // console.log({ grid });
@@ -22,7 +29,6 @@ class Grid extends Component {
                     isStart={isStart}
                     isFinish={isFinish}
                     isWall={isWall}
-                    mouseIsPressed={mouseIsPressed}
                     onMouseDown={onMouseDown}
                     onMouseUp={onMouseUp}
                     onMouseEnter={onMouseEnter}

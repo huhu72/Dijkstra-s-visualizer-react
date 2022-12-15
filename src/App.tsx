@@ -2,9 +2,9 @@ import "./App.css";
 import Grid from "./Components/Grid/grid";
 import React, { useState } from "react";
 import ButtonToggleGroup from "./Components/ButtonToggleGroup";
-import { ButtonTypes } from "./types";
+import { ButtonSettings, ButtonTypes, NodeType } from "./types";
 
-function getInitialGrid() {
+function getInitialGrid(): NodeType[][] {
   const grid = [];
 
   for (let row = 0; row < 23; row++) {
@@ -17,7 +17,7 @@ function getInitialGrid() {
   return grid;
 }
 
-function createNode(col, row) {
+function createNode(col: number, row:number): NodeType {
   return {
     row,
     col,
@@ -31,15 +31,15 @@ function createNode(col, row) {
 }
 
 export default function App() {
-  const [grid, setGrid] = useState(getInitialGrid());
-  const [mouseIsPressed, setMouseIsPresssed] = useState(false);
-  const [activeBtn, setActiveBtn] = useState(ButtonTypes.Wall);
-  const [startNode, setStartNode] = useState({ row: null, col: null });
+  const [grid, setGrid] = useState<NodeType[][]>(getInitialGrid());
+  const [mouseIsPressed, setMouseIsPresssed] = useState<boolean>(false);
+  const [activeBtn, setActiveBtn] = useState<ButtonTypes>(ButtonTypes.Wall);
+  const [startNode, setStartNode] = useState<{row: number, col:number}>({ row: null, col: null });
   const [buttonSettings, setButtonSettings] = useState(
     getInitialButtonSettings()
   );
 
-  function getInitialButtonSettings() {
+  function getInitialButtonSettings(): Record<ButtonTypes, ButtonSettings> {
     return Object.keys(ButtonTypes).reduce((accumulator, type) => {
       return {
         ...accumulator,
@@ -47,16 +47,16 @@ export default function App() {
           enabled: true,
         },
       };
-    }, {});
+    }, {} as Record<ButtonTypes, ButtonSettings>);
   }
 
-  function handleMouseEnter(row, col) {
+  function handleMouseEnter(row: number, col: number) {
     if (!mouseIsPressed) return;
     const newGrid = updateGrid(grid, row, col, { isWall: true });
     setGrid(newGrid);
   }
-
-  function updateGrid(grid, row, col, newState) {
+//Using partial lets you give a partial type of the object. (i.e were only using the isWall property instead of all the other ones.) this makes all the properties optional so we dont have to add a ? to the properties in the Node type
+  function updateGrid(grid: NodeType[][], row:number, col:number, newState:Partial<NodeType>):NodeType[][] {
     const newGrid = grid.slice();
     const node = newGrid[row][col];
     const updatedNode = { ...node, ...newState };
@@ -69,7 +69,7 @@ export default function App() {
     setMouseIsPresssed(false);
   }
 
-  function handleMouseDown(row, col) {
+  function handleMouseDown(row:number, col:number) {
     if (activeBtn === ButtonTypes.Wall) {
       const updatedGrid = updateGrid(grid, row, col, { isWall: true });
       setGrid(updatedGrid);
@@ -81,7 +81,7 @@ export default function App() {
     }
   }
 
-  function onClick(buttonType) {
+  function onClick(buttonType: ButtonTypes) {
     setActiveBtn(buttonType);
     if (buttonType === ButtonTypes.Reset) {
       handleReset();
@@ -100,7 +100,6 @@ export default function App() {
       <Grid
         key="grid"
         grid={grid}
-        mouseIsPressed={mouseIsPressed}
         onMouseEnter={handleMouseEnter}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
