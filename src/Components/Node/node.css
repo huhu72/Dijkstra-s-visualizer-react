@@ -1,9 +1,9 @@
-.node-finish {
-    background-color: #E9C46A;
-  }
-  
+
   .node-start {
     background-color: #E76F51 !important;
+  }
+  .node-end {
+    background-color: #2B59C3 !important;
   }
   
   .node-visited {
@@ -42,7 +42,7 @@
   .node-wall {
      background-color: #F4A261 !important;
   }
-  
+
   .node-shortest-path {
     animation-name: shortestPath;
     animation-duration: 1.5s;
@@ -57,16 +57,16 @@
   @keyframes shortestPath {
     0% {
       transform: scale(0.6);
-      background-color: rgb(255, 254, 106);
+      background-color: rgb(41, 191, 18);
     }
   
     50% {
       transform: scale(1.2);
-      background-color: rgb(255, 254, 106);
+      background-color: rgb(41, 191, 18);
     }
   
     100% {
       transform: scale(1);
-      background-color: rgb(255, 254, 106);
+      background-color: rgb(41, 191, 18);
     }
   }

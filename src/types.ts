@@ -1,21 +1,23 @@
 export enum ButtonTypes {
-  Start = "Start",
-  End = "End",
-  Wall= "Wall",
-  Reset= "Reset",
+  Start = 'Start',
+  End = 'End',
+  Wall = 'Wall',
+  Reset = 'Reset',
+  Run = 'Run'
 };
 
-export type NodeType = {
-    row: number,
-    col: number,
-    isStart: boolean,
-    isFinish: boolean,
-    isWall: boolean,
-    distance: number,
-    isVisited: boolean,
-    previousNode: Node
+export interface NodeType {
+  row: number
+  col: number
+  isStart: boolean
+  isEnd: boolean
+  isFinish: boolean
+  isWall: boolean
+  distance: number
+  isVisited: boolean
+  previousNode: NodeType | null
 }
 
-export type ButtonSettings = {
+export interface ButtonSettings {
   enabled: boolean
 }
