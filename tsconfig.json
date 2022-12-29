@@ -19,7 +19,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es5",
-    "strictNullChecks": false
+    "strictNullChecks": true
   },
   "include": [
     "src"
