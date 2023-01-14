@@ -21,3 +21,18 @@ export interface NodeType {
 export interface ButtonSettings {
   enabled: boolean
 }
+
+export interface Props {
+  row: number
+  col: number
+  isStart: boolean
+  isEnd: boolean
+  isFinish: boolean
+  isWall: boolean
+  onMouseDown: (row: number, col: number) => void
+  onMouseUp: () => void
+  onMouseEnter: (row: number, col: number) => void
+  rowCount: number
+  windowSize: { width: number, height: number }
+  grid: Node[][]
+}

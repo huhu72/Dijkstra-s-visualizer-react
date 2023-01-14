@@ -5,12 +5,13 @@ import ButtonToggleGroup from './Components/ButtonToggleGroup'
 import { ButtonSettings, ButtonTypes, NodeType } from './types'
 import dijkstra, { getNodesInShortestPathOrder } from './Algorithms/dijkstra'
 
+const rowCount = 40
 function getInitialGrid (): NodeType[][] {
   const grid = []
 
-  for (let row = 0; row < 23; row++) {
+  for (let row = 0; row < 19; row++) {
     const currentRow = []
-    for (let col = 0; col < 53; col++) {
+    for (let col = 0; col < rowCount; col++) {
       currentRow.push(createNode(col, row))
     }
     grid.push(currentRow)
@@ -177,6 +178,7 @@ export default function App (): JSX.Element {
         onMouseEnter={handleMouseEnter}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
+        rowCount = {rowCount}
       />
     </div>
   )

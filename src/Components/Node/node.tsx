@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './node.css'
 interface Props {
   row: number
@@ -10,21 +10,22 @@ interface Props {
   onMouseDown: (row: number, col: number) => void
   onMouseUp: () => void
   onMouseEnter: (row: number, col: number) => void
+  rowCount: number
+  windowSize: { width: number, height: number }
 }
-class Node extends Component<Props> {
-  state = {}
-  render (): JSX.Element {
-    const {
-      row,
-      col,
-      isStart,
-      isEnd,
-      isWall,
-      onMouseUp,
-      onMouseDown,
-      onMouseEnter
-    } = this.props
-    const appendedClassName =
+export default function Node ({
+  row,
+  col,
+  isStart,
+  isEnd,
+  isWall,
+  onMouseUp,
+  onMouseDown,
+  onMouseEnter,
+  rowCount,
+  windowSize
+}: Props): JSX.Element {
+  const appendedClassName =
        isStart
          ? 'node-start'
          : isEnd
@@ -33,7 +34,7 @@ class Node extends Component<Props> {
              ? 'node-wall'
              : ''
 
-    return (
+  return (
       <div
         key={`node-${row}-${col}`}
         id={`node-${row}-${col}`}
@@ -42,16 +43,13 @@ class Node extends Component<Props> {
         onMouseUp={() => onMouseUp}
         onMouseEnter={() => onMouseEnter(row, col)}
         style={{
-          width: '1.6vw',
-          height: '1.6vw',
+          width: ((Math.min(windowSize.width) / rowCount) - 4) * 0.98,
+          height: ((Math.min(windowSize.width) / rowCount) - 4) * 0.98,
           display: 'inline-block',
           marginInline: '2px',
           backgroundColor: '#868686',
           borderRadius: '5px'
         }}
       ></div>
-    )
-  }
+  )
 }
-
-export default Node
