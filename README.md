@@ -1,5 +1,3 @@
-Here's an updated version of the README.md file that includes the information about resetting the grid:
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Dijkstra's Visualizer React
 
