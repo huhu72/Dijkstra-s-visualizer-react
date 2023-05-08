@@ -1,3 +1,5 @@
+Here's an updated version of the README.md file that includes the information about resetting the grid:
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Dijkstra's Visualizer React
 
@@ -14,6 +16,7 @@ To use the application, follow these steps:
 5. Click the "Wall" button to enable wall node selection mode
 6. Click any square to set it as a wall node
 7. Click the "Run" button to run the algorithm and visualize the shortest path between the start and end nodes
+8. To reset the grid, click the "Reset" button.
 
 ## Demo
 
